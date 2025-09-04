@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -26,12 +25,11 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavController
 import com.jorgeromo.androidClassMp1.R
-import com.jorgeromo.androidClassMp1.ui.theme.AndroidClassMP1Theme
-
 
 @Composable
-fun LoginView() {
+fun LoginView(navController: NavController) {
     // Variables de estado
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -96,13 +94,38 @@ fun LoginView() {
         ) {
             Text(stringResource(R.string.login_button))
         }
-    }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun LoginViewPreview() {
-    AndroidClassMP1Theme {
-        LoginView()
+        Spacer(modifier = Modifier.height(8.dp))
+
+        // Botón de huella dactilar
+        Button(
+            onClick = { /* Lógica de autenticación con huella */ },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.faceid),
+                    contentDescription = "Face ID",
+                    modifier = Modifier.size(24.dp)
+                )
+                Spacer(modifier = Modifier.width(8.dp))
+                Text("Face ID")
+            }
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // 🔙 Botón de regresar
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Button(onClick = { navController.popBackStack() }) {
+                Text("Regresar")
+            }
+        }
     }
 }
